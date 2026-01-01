@@ -1,6 +1,6 @@
 # Warhammer Community RSS
 
-A simple Python script that crawls the Warhammer Community website and generates an RSS feed from the latest news articles.
+I am a big fan of both Warhammer and RSS. Warhammer Community website team decided to remove RSS a while ago. I even contacted GW about it, but I was told that there is no plan to bring the feature back. In the true spirit of a heretek I've decided to make my own solution. This is a simple Python script that crawls the Warhammer Community website and generates an RSS feed from the latest news articles.
 
 ## Requirements
 
@@ -85,7 +85,3 @@ To change the number of articles in the feed, modify line 30 in `whc_crawler.py`
 ```python
 for item_data in items[:10]:  # Change 10 to desired number
 ```
-
-## License
-
-BSD 3-Clause License - feel free to modify and distribute.
