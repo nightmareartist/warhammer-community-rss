@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime, UTC
+from datetime import datetime, UTC, timedelta
 import xml.etree.ElementTree as ET
 import sys
 
@@ -57,11 +57,16 @@ def generate_rss(items, output_file='warhammer_feed.xml'):
         ET.SubElement(channel, 'description').text = 'Latest news from Warhammer Community'
         ET.SubElement(channel, 'lastBuildDate').text = datetime.now(UTC).strftime('%a, %d %b %Y %H:%M:%S GMT')
         
-        for item_data in items[:10]:
+        current_time = datetime.now(UTC)
+        
+        for idx, item_data in enumerate(items[:10]):
             item = ET.SubElement(channel, 'item')
             ET.SubElement(item, 'title').text = item_data['title']
             ET.SubElement(item, 'link').text = item_data['url']
             ET.SubElement(item, 'guid', isPermaLink='true').text = item_data['url']
+            # Add pubDate - newer items get more recent timestamps
+            pub_date = current_time - timedelta(minutes=idx)
+            ET.SubElement(item, 'pubDate').text = pub_date.strftime('%a, %d %b %Y %H:%M:%S GMT')
         
         tree = ET.ElementTree(rss)
         ET.indent(tree, space='  ')
